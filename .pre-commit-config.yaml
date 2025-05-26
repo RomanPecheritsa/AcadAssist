@@ -1,64 +1,18 @@
 repos:
-  # Базовые хуки для всех проектов
-  - repo: https://github.com/pre-commit/pre-commit-hooks
+-   repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v5.0.0
     hooks:
-      - id: trailing-whitespace
-      - id: end-of-file-fixer
-        exclude: .gitignore
-      - id: check-yaml
-      - id: check-added-large-files
-      - id: check-ast
-      - id: debug-statements
-      - id: detect-private-key
-
-  # Форматирование кода
-  - repo: https://github.com/psf/black
-    rev: 25.1.0
-    hooks:
-      - id: black
-        language_version: python3.12
-        args: [--line-length=120]
-
-  # Сортировка импортов
-  - repo: https://github.com/PyCQA/isort
-    rev: 6.0.1
-    hooks:
-      - id: isort
-        name: isort (python)
-        args: ["--profile", "black"]
-
-  # Линтинг
-  - repo: https://github.com/PyCQA/flake8
-    rev: 6.1.0
-    hooks:
-      - id: flake8
-        additional_dependencies:
-          - flake8-bugbear==23.11.28
-          - flake8-comprehensions==3.14.0
-          - flake8-simplify==0.20.0
-
-  # Проверка типов
-  - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v1.15.0
-    hooks:
-      - id: mypy
-        additional_dependencies:
-          - types-requests
-          - types-python-dateutil
-          - types-pyyaml
+    -   id: check-added-large-files
+    -   id: check-toml
+    -   id: check-yaml
         args:
-          - --ignore-missing-imports
-          - --disallow-untyped-defs
-          - --strict-equality
-          - --show-error-codes
-          - --python-version=3.12
-
-  # Проверка зависимостей
-  - repo: https://github.com/executablebooks/mdformat
-    rev: 0.7.22
+        -   --unsafe
+    -   id: end-of-file-fixer
+    -   id: trailing-whitespace
+-   repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.7.1
     hooks:
-      - id: mdformat
-        additional_dependencies:
-          - mdformat-gfm
-          - mdformat-frontmatter
+    -   id: ruff
+        args:
+        - --fix
+    -   id: ruff-format
