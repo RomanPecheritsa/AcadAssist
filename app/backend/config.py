@@ -12,19 +12,9 @@ class DatabaseConfig:
     port: int
 
     @property
-    def dsn(self) -> str:
-        """Возвращает DSN для синхронного подключения (SQLAlchemy)"""
-        return f"postgresql://{self.user}:{self.password}@{self.host}:{self.port}/{self.database}"
-
-    @property
     def async_dsn(self) -> str:
         """Возвращает DSN для асинхронного подключения (asyncpg)"""
         return f"postgresql+asyncpg://{self.user}:{self.password}@{self.host}:{self.port}/{self.database}"
-
-    @property
-    def alembic_url(self) -> str:
-        """Возвращает URL для Alembic"""
-        return self.dsn
 
 
 @dataclass
