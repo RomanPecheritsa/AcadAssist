@@ -1,51 +1,46 @@
-from dataclasses import dataclass
+from enum import Enum
+from functools import lru_cache
 
-from environs import Env
+from pydantic_settings import BaseSettings
 
 
-@dataclass
-class DatabaseConfig:
-    user: str
-    password: str
-    database: str
-    host: str
-    port: int
+class Environment(str, Enum):
+    DEVELOPMENT = "dev"
+    TESTING = "test"
+    PRODUCTION = "prod"
+
+
+class Settings(BaseSettings):
+    ENVIRONMENT: Environment = Environment.DEVELOPMENT
+
+    APP_HOST: str
+    APP_PORT: int
+    DEBUG: bool
+
+    POSTGRES_USER: str
+    POSTGRES_PASSWORD: str
+    POSTGRES_DB: str
+    POSTGRES_HOST: str
+    POSTGRES_PORT: int
 
     @property
-    def async_dsn(self) -> str:
-        """Возвращает DSN для асинхронного подключения (asyncpg)"""
-        return f"postgresql+asyncpg://{self.user}:{self.password}@{self.host}:{self.port}/{self.database}"
+    def DATABASE_URL(self) -> str:
+        return (
+            f"postgresql+asyncpg://{self.POSTGRES_USER}:{self.POSTGRES_PASSWORD}@"
+            f"{self.POSTGRES_HOST}:{self.POSTGRES_PORT}/{self.POSTGRES_DB}"
+        )
+
+    class Config:
+        env_file_encoding = "utf-8"
+
+    @classmethod
+    def load_config(cls, environment: Environment = Environment.DEVELOPMENT):
+        return cls(_env_file=f".env.{environment.value}")
 
 
-@dataclass
-class AppConfig:
-    host: str
-    port: int
-    debug: bool
+@lru_cache
+def get_settings() -> Settings:
+    from os import getenv
 
-
-@dataclass
-class Config:
-    app: AppConfig
-    db: DatabaseConfig
-
-
-def load_config(path: str | None = None) -> Config:
-    env = Env()
-    env.read_env(path)
-
-    return Config(
-        app=AppConfig(
-            host=env.str("APP_HOST", "0.0.0.0"), port=env.int("APP_PORT", 8000), debug=env.bool("DEBUG", False)
-        ),
-        db=DatabaseConfig(
-            user=env.str("POSTGRES_USER"),
-            password=env.str("POSTGRES_PASSWORD"),
-            database=env.str("POSTGRES_DB"),
-            host=env.str("POSTGRES_HOST", "localhost"),
-            port=env.int("POSTGRES_PORT", 5432),
-        ),
-    )
-
-
-settings = load_config()
+    env = getenv("ENVIRONMENT", "dev")
+    return Settings.load_config(Environment(env))
