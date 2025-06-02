@@ -1,8 +1,8 @@
-"""Initial revision
+"""init
 
-Revision ID: 9ba39ac17485
+Revision ID: 0ce1f3ac98b2
 Revises:
-Create Date: 2025-06-02 14:11:39.122661
+Create Date: 2025-06-02 16:30:41.462735
 
 """
 
@@ -12,7 +12,7 @@ import sqlalchemy as sa
 from alembic import op
 
 # revision identifiers, used by Alembic.
-revision: str = "9ba39ac17485"
+revision: str = "0ce1f3ac98b2"
 down_revision: str | None = None
 branch_labels: str | Sequence[str] | None = None
 depends_on: str | Sequence[str] | None = None
@@ -147,7 +147,4 @@ def downgrade() -> None:
     op.drop_table("work_types")
     op.drop_table("universities")
     op.drop_table("education_forms")
-
-    op.execute("DROP TYPE IF EXISTS educationformtype")
-    op.execute("DROP TYPE IF EXISTS worktype")
     # ### end Alembic commands ###
