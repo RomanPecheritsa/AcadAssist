@@ -13,12 +13,10 @@ class Environment(str, Enum):
 class Settings(BaseSettings):
     ENVIRONMENT: Environment = Environment.DEVELOPMENT
 
-    # FastAPI
     APP_HOST: str
     APP_PORT: int
     DEBUG: bool
 
-    # PostgreSQL
     POSTGRES_USER: str
     POSTGRES_PASSWORD: str
     POSTGRES_DB: str
