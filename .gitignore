@@ -46,6 +46,7 @@ cover/
 *.mo
 *.pot
 
+log/
 *.log
 local_settings.py
 db.sqlite3
