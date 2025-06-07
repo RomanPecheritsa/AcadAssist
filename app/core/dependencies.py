@@ -1,7 +1,7 @@
 from fastapi import Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.backend.db import get_db
+from app.core.db import get_db
 from app.repositories.university_repository import UniversityRepository
 from app.services.university_service import UniversityService
 

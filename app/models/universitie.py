@@ -4,7 +4,7 @@ from enum import Enum
 from sqlalchemy import Column, ForeignKey, String, Table
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from app.backend.db import Base
+from app.core.db import Base
 
 
 class EducationFormType(str, Enum):
