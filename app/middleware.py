@@ -11,7 +11,7 @@ async def log_requests_middleware(request: Request, call_next):
 
     response = await call_next(request)
 
-    process_time = (time.time() - start_time) * 1000  # мс
+    process_time = (time.time() - start_time) * 1000
     client_ip = request.client.host if request.client else "unknown"
     method = request.method
     path = request.url.path
