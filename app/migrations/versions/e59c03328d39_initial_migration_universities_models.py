@@ -1,8 +1,8 @@
-"""init
+"""Initial migration Universities models
 
-Revision ID: 0ce1f3ac98b2
+Revision ID: e59c03328d39
 Revises:
-Create Date: 2025-06-02 16:30:41.462735
+Create Date: 2025-06-07 12:07:23.732777
 
 """
 
@@ -12,7 +12,7 @@ import sqlalchemy as sa
 from alembic import op
 
 # revision identifiers, used by Alembic.
-revision: str = "0ce1f3ac98b2"
+revision: str = "e59c03328d39"
 down_revision: str | None = None
 branch_labels: str | Sequence[str] | None = None
 depends_on: str | Sequence[str] | None = None

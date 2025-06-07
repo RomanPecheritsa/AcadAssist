@@ -21,13 +21,19 @@ class WorkType(str, Enum):
     THESIS = "ВКР"
 
 
-# Модели
+university_education_forms = Table(
+    "university_education_forms",
+    Base.metadata,
+    Column("university_id", ForeignKey("universities.id"), primary_key=True),
+    Column("education_form_id", ForeignKey("education_forms.id"), primary_key=True),
+)
+
+
 class University(Base):
     __tablename__ = "universities"
 
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str] = mapped_column(String(100), unique=True)
-
     specialties: Mapped[list["Specialty"]] = relationship(back_populates="university")
 
 
@@ -101,11 +107,3 @@ class Work(Base):
 
     subject: Mapped["Subject"] = relationship(back_populates="works")
     work_type: Mapped["WorkTypeModel"] = relationship(back_populates="works")
-
-
-university_education_forms = Table(
-    "university_education_forms",
-    Base.metadata,
-    Column("university_id", ForeignKey("universities.id"), primary_key=True),
-    Column("education_form_id", ForeignKey("education_forms.id"), primary_key=True),
-)
