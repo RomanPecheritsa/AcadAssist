@@ -4,7 +4,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 from sqlalchemy.orm import DeclarativeBase
 
-from app.models.university import Semester, Specialty, University
+from app.models.university import Semester, Speciality, Subject, University, Work
 
 ModelType = TypeVar("ModelType", bound=DeclarativeBase)
 
@@ -46,11 +46,21 @@ class UniversityRepository(BaseRepository[University]):
         super().__init__(University, session)
 
 
-class SpecialtyRepository(BaseRepository[Specialty]):
+class SpecialityRepository(BaseRepository[Speciality]):
     def __init__(self, session: AsyncSession):
-        super().__init__(Specialty, session)
+        super().__init__(Speciality, session)
 
 
 class SemesterRepository(BaseRepository[Semester]):
     def __init__(self, session: AsyncSession):
         super().__init__(Semester, session)
+
+
+class SubjectRepository(BaseRepository[Subject]):
+    def __init__(self, session: AsyncSession):
+        super().__init__(Subject, session)
+
+
+class WorkRepository(BaseRepository[Work]):
+    def __init__(self, session: AsyncSession):
+        super().__init__(Work, session)
