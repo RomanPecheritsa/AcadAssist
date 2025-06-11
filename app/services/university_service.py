@@ -1,4 +1,4 @@
-from app.models.university import Specialty, University
+from app.models.university import Semester, Specialty, University
 from app.repositories.university_repository import SpecialtyRepository, UniversityRepository
 
 
@@ -40,3 +40,41 @@ class SpecialtyService:
 
     async def delete_specialty(self, specialty: Specialty) -> None:
         await self.repository.delete(specialty)
+
+
+class SemesterService:
+    def __init__(self, repository, specialty_repository: SpecialtyRepository):
+        self.repository = repository
+        self.specialty_repository = specialty_repository
+
+    async def _validate_semester_number(self, specialty_id: int, number: int):
+        specialty: Specialty | None = await self.specialty_repository.get_by_id(specialty_id)
+        if not specialty:
+            raise ValueError("Specialty not found")
+        if number > specialty.semesters_count:
+            raise ValueError(f"Semester number {number} exceeds max allowed: {specialty.semesters_count}")
+
+    async def create_semester(self, data: dict) -> Semester:
+        specialty_id = data["specialty_id"]
+        semester_number = data["number"]
+
+        await self._validate_semester_number(specialty_id, semester_number)
+
+        return await self.repository.create(data)
+
+    async def update_semester(self, semester: Semester, data: dict) -> Semester:
+        new_number = data.get("number", semester.number)
+        new_specialty_id = data.get("specialty_id", semester.specialty_id)
+
+        await self._validate_semester_number(new_specialty_id, new_number)
+
+        return await self.repository.update(semester, data)
+
+    async def get_all_semesters(self):
+        return await self.repository.get_all()
+
+    async def get_semester_by_id(self, semester_id: int):
+        return await self.repository.get_by_id(semester_id)
+
+    async def delete_semester(self, semester: Semester):
+        await self.repository.delete(semester)
