@@ -20,7 +20,7 @@ class Settings(BaseSettings):
         )
 
     class Config:
-        env_file = ".env"  # ← только один .env
+        env_file = ".env"
         env_file_encoding = "utf-8"
 
 
