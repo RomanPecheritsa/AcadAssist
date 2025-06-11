@@ -1,16 +1,16 @@
-"""def field mtm
+"""Initial clean migration
 
-Revision ID: 6341b5d46d4a
-Revises: e59c03328d39
-Create Date: 2025-06-07 12:44:16.012418
+Revision ID: b3aab7f6a003
+Revises:
+Create Date: 2025-06-11 12:57:19.804681
 
 """
 
 from collections.abc import Sequence
 
 # revision identifiers, used by Alembic.
-revision: str = "6341b5d46d4a"
-down_revision: str | None = "e59c03328d39"
+revision: str = "b3aab7f6a003"
+down_revision: str | None = None
 branch_labels: str | Sequence[str] | None = None
 depends_on: str | Sequence[str] | None = None
 
