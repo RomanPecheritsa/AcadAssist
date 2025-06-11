@@ -46,14 +46,14 @@ def upgrade() -> None:
     )
     op.create_table(
         "semesters",
-        sa.Column("specialty_id", sa.Integer(), nullable=False),
+        sa.Column("speciality_id", sa.Integer(), nullable=False),
         sa.Column("number", sa.Integer(), nullable=False),
         sa.Column("cost", sa.Integer(), nullable=False),
         sa.Column("deadline", sa.Date(), nullable=False),
         sa.Column("id", sa.Integer(), autoincrement=True, nullable=False),
         sa.Column("created_at", sa.DateTime(), server_default=sa.text("now()"), nullable=False),
         sa.Column("updated_at", sa.DateTime(), server_default=sa.text("now()"), nullable=False),
-        sa.ForeignKeyConstraint(["specialty_id"], ["specialties.id"], ondelete="CASCADE"),
+        sa.ForeignKeyConstraint(["speciality_id"], ["specialties.id"], ondelete="CASCADE"),
         sa.PrimaryKeyConstraint("id"),
     )
     op.create_table(
